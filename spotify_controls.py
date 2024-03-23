@@ -1,12 +1,27 @@
 import base64
 import requests
+import json
 
-CLIENT_ID = 'e7475af827eb493eb04d608eb62dc6b1'
-CLIENT_SECRET = 'f767a453e9f04fd2adfd42577cee6d0d'
-REDIRECT_URI = 'https://eob5j15ki6at15.m.pipedream.net'
+# --- Retrieving API Keys ---
 
-# RequestBin
-USER_TOKEN = 'BQC8IRtGnmiYJD2_zQCWmmX12G2RYC9qpqkediDVGfPmfgbH_hBfn_WE9oulmDOnUxAfzGz3-8Izq2xht6GoTfgMhCP15_weJTez_hBgnZeEfQIAleFfbGnz2g-Q2Zj01X8AEkGwMBJbvrxtZ19kqnUc1B4kHtJoauOiQjIyZZRGvbejixY2XrRNI1r1-utEj8subvT-CSQPRFLqV5c82a43UfoIhoQ7NLJjnDx2__GydBoYwl0Kzv1lDtvTkmpbAIIUWD7nsiQAYVbvJG2Nu0OLimqTmh3yspH5LT_71ZQl9ODhlICh'
+def read_json_file(file_path):
+    with open(file_path, 'r') as json_file:
+        data = json.load(json_file)
+    return data
+
+def get_string_values_from_json(json_data):
+    string_values = {}
+    for key, value in json_data.items():
+        string_values[key] = str(value)
+    return string_values
+
+# Read API keys from json file
+json_file_path = 'api-secret.json'
+api_keys = read_json_file(json_file_path)
+
+CLIENT_ID = api_keys.get('CLIENT_ID')
+CLIENT_SECRET = api_keys.get('CLIENT_SECRET')
+REDIRECT_URI = api_keys.get('REDIRECT_URI')
 
 # --- Setup ---
 
@@ -131,6 +146,3 @@ def previousSong():
 
     if response.status_code != 204:
         print("Failed to skip to the next track.")
-
-previousSong()
-
