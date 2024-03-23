@@ -1,4 +1,4 @@
-from spotifyControls import *
+from spotify_controls import *
 from RPi import GPIO
 import board
 import digitalio
